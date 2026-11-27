@@ -132,6 +132,13 @@
   music?.addEventListener('pause', syncMusicButton);
   music?.addEventListener('error', showMusicError);
   syncMusicButton();
+  // Try audible autoplay on page load. Browsers may block this until a user gesture.
+  if (music) {
+    music.play().catch(error => {
+      if (error?.name === 'NotAllowedError') return;
+      showMusicError();
+    });
+  }
   q('[data-invite]')?.addEventListener('click', () => { q('.envelope')?.classList.add('open'); music?.play().catch(showMusicError); setTimeout(() => { q('#invite')?.close(); q('#couple')?.scrollIntoView(); q('.envelope')?.classList.remove('open'); }, reduced ? 0 : 700); });
   musicButton?.addEventListener('click', async () => {
     if (!music) return;
