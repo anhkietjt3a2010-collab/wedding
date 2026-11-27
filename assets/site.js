@@ -18,9 +18,11 @@
       slide.classList.toggle('active', active);
       slide.setAttribute('aria-hidden', String(!active));
     });
+    const dotWindowStart = Math.max(0, Math.min(index - 2, slides.length - 5));
     qa('button', dots).forEach((button, i) => {
       button.classList.toggle('active', i === index);
       button.setAttribute('aria-current', i === index ? 'true' : 'false');
+      button.hidden = slides.length > 5 && (i < dotWindowStart || i >= dotWindowStart + 5);
     });
     const status = q('[data-slide-status]');
     if (status) status.textContent = `Ảnh ${index + 1} trên ${slides.length}`;
@@ -86,7 +88,10 @@
     }
   }
 
-  qa('[data-open]').forEach(button => button.addEventListener('click', () => q(`#${button.dataset.open}`)?.showModal()));
+  qa('[data-open]').forEach(button => button.addEventListener('click', () => {
+    q(`#${button.dataset.open}`)?.showModal();
+    if (button.dataset.open === 'invite') music?.play().catch(showMusicError);
+  }));
   qa('[data-close]').forEach(button => button.addEventListener('click', () => button.closest('dialog')?.close()));
   qa('dialog').forEach(dialog => dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); }));
   const giftTabs = qa('[data-gift-tab]');
@@ -135,7 +140,10 @@
   // Try audible autoplay on page load. Browsers may block this until a user gesture.
   if (music) {
     music.play().catch(error => {
-      if (error?.name === 'NotAllowedError') return;
+      if (error?.name === 'NotAllowedError') {
+        if (musicButton) musicButton.dataset.error = 'Trình duyệt chặn tự phát. Chạm ♫ để bật nhạc nền.';
+        return;
+      }
       showMusicError();
     });
   }
@@ -152,6 +160,18 @@
   });
   q('.menu')?.addEventListener('click', event => { const nav = q('.nav nav'); const open = nav?.classList.toggle('open') ?? false; event.currentTarget.setAttribute('aria-expanded', String(open)); event.currentTarget.setAttribute('aria-label', open ? 'Đóng menu' : 'Mở menu'); });
   qa('.nav nav a').forEach(link => link.addEventListener('click', () => { q('.nav nav')?.classList.remove('open'); q('.menu')?.setAttribute('aria-expanded', 'false'); }));
+  const mobileLinks = qa('.mobile-tabbar a');
+  if ('IntersectionObserver' in window && mobileLinks.length) {
+    const sectionObserver = new IntersectionObserver(entries => {
+      const current = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!current) return;
+      mobileLinks.forEach(link => {
+        if (link.hash === `#${current.target.id}`) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }, { rootMargin: '-24% 0px -58% 0px', threshold: [0, .2, .5] });
+    ['home', 'events', 'gallery', 'rsvp', 'story'].forEach(id => { const section = document.getElementById(id); if (section) sectionObserver.observe(section); });
+  }
   const attendance = q('[name=attendance]');
   attendance?.addEventListener('change', () => { q('[name=guests]').disabled = attendance.value === 'no'; });
   setTimeout(() => q('.toast')?.remove(), 6500);
