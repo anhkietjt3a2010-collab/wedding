@@ -81,7 +81,8 @@
     const petals = q('.petals');
     if (petals && !reduced) for (let i = 0; i < (innerWidth < 650 ? 6 : 12); i++) {
       const petal = document.createElement('span'); petal.className = 'petal';
-      petal.style.left = `${(i * 37) % 100}%`; petal.style.animationDelay = `-${i * .8}s`; petal.style.animationDuration = `${8 + i % 5}s`; petals.append(petal);
+      const drift = (i * 29) % 65 - 32;
+      petal.style.left = `${(i * 37) % 100}%`; petal.style.setProperty('--drift', `${drift}px`); petal.style.setProperty('--drift-end', `${Math.round(-drift * .35)}px`); petal.style.setProperty('--start-turn', `${i * 31}deg`); petal.style.setProperty('--mid-turn', `${150 + i * 17}deg`); petal.style.setProperty('--end-turn', `${360 + i * 37}deg`); petal.style.animationDelay = `${-i * .8}s`; petal.style.animationDuration = `${8 + i % 5}s`; petals.append(petal);
     }
   }
 
