@@ -76,10 +76,15 @@
 
   if (!reduced && 'IntersectionObserver' in window) {
     document.documentElement.classList.add('js');
+    qa('#main-content .count > div, #main-content #gift-note > *, #main-content > footer > *').forEach(element => element.classList.add('reveal'));
     const observer = new IntersectionObserver(entries => entries.forEach(entry => {
       if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
     }), { threshold: .1 });
-    qa('.reveal').forEach(element => observer.observe(element));
+    qa('.reveal').forEach(element => {
+      const siblings = [...element.parentElement.children].filter(item => item.classList.contains('reveal'));
+      element.style.setProperty('--reveal-delay', Math.min(siblings.indexOf(element) * 80, 240) + 'ms');
+      observer.observe(element);
+    });
     const petals = q('.petals');
     if (petals && !reduced) for (let i = 0; i < (innerWidth < 650 ? 6 : 12); i++) {
       const petal = document.createElement('span'); petal.className = 'petal';
