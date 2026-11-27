@@ -129,3 +129,7 @@ footer>p:not(.credits){max-width:760px;margin:12px auto 22px}
 #invitations .qr-image table{width:176px!important;height:176px!important;table-layout:fixed}
 .guest-personal{margin:8px 0 0;color:var(--deep);font:600 clamp(22px,3vw,34px)/1.25 var(--serif)}
 @media(max-width:700px){.invitee-create{grid-template-columns:1fr}#invitations .invitee-card{grid-template-columns:minmax(0,1fr)!important}.invitee-card{grid-template-columns:1fr}.invitee-qr,#invitations .invitee-qr{grid-column:1;grid-row:1}.invitee-actions>*{flex:1 1 150px}.invitee-actions form{flex:1 1 150px}.invitee-actions form button{width:100%}.invitee-edit{grid-template-columns:1fr!important}.invitee-heading{align-items:flex-start;flex-direction:column}}
+
+/* Match the reference portrait typography: warm antique gold calligraphy. */
+.hero h2{font-family:"Great Vibes",cursive;color:#a97819;text-shadow:0 1px 0 rgba(255,255,255,.78),0 2px 8px rgba(111,72,12,.12)}
+@media(max-width:650px){.hero h2{color:#a97819}}
