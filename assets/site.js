@@ -140,11 +140,8 @@
   // Try audible autoplay on page load. Browsers may block this until a user gesture.
   if (music) {
     music.play().catch(error => {
-      if (error?.name === 'NotAllowedError') {
-        if (musicButton) musicButton.dataset.error = 'Trình duyệt chặn tự phát. Chạm ♫ để bật nhạc nền.';
-        return;
-      }
-      showMusicError();
+      // Autoplay is normally blocked on phones until a guest interacts; the music button is already visible.
+      if (error?.name !== 'NotAllowedError') showMusicError();
     });
   }
   q('[data-invite]')?.addEventListener('click', () => { q('.envelope')?.classList.add('open'); music?.play().catch(showMusicError); setTimeout(() => { q('#invite')?.close(); q('#couple')?.scrollIntoView(); q('.envelope')?.classList.remove('open'); }, reduced ? 0 : 700); });
