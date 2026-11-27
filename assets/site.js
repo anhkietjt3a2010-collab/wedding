@@ -79,7 +79,7 @@
     }), { threshold: .1 });
     qa('.reveal').forEach(element => observer.observe(element));
     const petals = q('.petals');
-    if (petals) for (let i = 0; i < (innerWidth < 650 ? 6 : 12); i++) {
+    if (petals && !reduced) for (let i = 0; i < (innerWidth < 650 ? 6 : 12); i++) {
       const petal = document.createElement('span'); petal.className = 'petal';
       petal.style.left = `${(i * 37) % 100}%`; petal.style.animationDelay = `-${i * .8}s`; petal.style.animationDuration = `${8 + i % 5}s`; petals.append(petal);
     }
