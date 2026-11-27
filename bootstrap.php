@@ -15,7 +15,7 @@ function ready(): bool {try{return db()!==null && (int)db()->query('SELECT COUNT
 function ensure_invitation_schema(): void {
  static $done=false;if($done)return;$p=db();if(!$p)throw new RuntimeException('Chưa kết nối MySQL.');
  $p->exec('CREATE TABLE IF NOT EXISTS invited_guests (id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(150) NOT NULL, token CHAR(64) NOT NULL UNIQUE, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, INDEX idx_invited_guests_created (created_at)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
- if(!$p->query("SHOW COLUMNS FROM responses LIKE 'guest_id'")->fetch())$p->exec('ALTER TABLE responses ADD COLUMN guest_id BIGINT UNSIGNED NULL, ADD INDEX idx_responses_guest (guest_id)');
+ $p->exec('CREATE TABLE IF NOT EXISTS invitation_responses (guest_id BIGINT UNSIGNED NOT NULL PRIMARY KEY, response_id BIGINT UNSIGNED NOT NULL UNIQUE, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, INDEX idx_invitation_responses_response (response_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
  $done=true;
 }
 function site_base_url(): string {
