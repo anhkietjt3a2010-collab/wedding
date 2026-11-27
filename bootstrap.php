@@ -12,6 +12,20 @@ function check_csrf(): void {if(!hash_equals(csrf(),(string)($_POST['csrf']??'')
 function db(): ?PDO {static $pdo=null; if($pdo)return $pdo; if(!is_file(__DIR__.'/config.php'))return null; $c=require __DIR__.'/config.php'; try{return $pdo=new PDO($c['dsn'],$c['user'],$c['password'],[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,PDO::ATTR_EMULATE_PREPARES=>false]);}catch(Throwable $x){error_log($x->getMessage());return null;}}
 function content(): array {$d=require __DIR__.'/defaults.php'; if($p=db()){try{$r=$p->query('SELECT content FROM settings WHERE id=1')->fetchColumn();if($r)$d=array_replace($d,json_decode($r,true,512,JSON_THROW_ON_ERROR));}catch(Throwable $x){error_log($x->getMessage());}}$defaults=require __DIR__.'/defaults.php';$d['gifts']=array_replace_recursive($defaults['gifts'],$d['gifts']??[]);return $d;}
 function ready(): bool {try{return db()!==null && (int)db()->query('SELECT COUNT(*) FROM admins')->fetchColumn()>0;}catch(Throwable $x){return false;}}
+function ensure_invitation_schema(): void {
+ static $done=false;if($done)return;$p=db();if(!$p)throw new RuntimeException('Chưa kết nối MySQL.');
+ $p->exec('CREATE TABLE IF NOT EXISTS invited_guests (id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(150) NOT NULL, token CHAR(64) NOT NULL UNIQUE, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, INDEX idx_invited_guests_created (created_at)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
+ if(!$p->query("SHOW COLUMNS FROM responses LIKE 'guest_id'")->fetch())$p->exec('ALTER TABLE responses ADD COLUMN guest_id BIGINT UNSIGNED NULL, ADD INDEX idx_responses_guest (guest_id)');
+ $done=true;
+}
+function site_base_url(): string {
+ $c=is_file(__DIR__.'/config.php')?require __DIR__.'/config.php':[];$configured=trim((string)($c['site_url']??''));
+ if($configured!==''&&filter_var($configured,FILTER_VALIDATE_URL)&&strtolower((string)parse_url($configured,PHP_URL_SCHEME))==='https')return rtrim($configured,'/');
+ $host=(string)($_SERVER['HTTP_HOST']??'localhost');if(!preg_match('/^[a-z0-9.-]+(?::[0-9]{1,5})?$/iD',$host))$host='localhost';
+ if(in_array(strtolower(preg_replace('/:\d+$/','',$host)),['localhost','127.0.0.1'],true))return 'https://wedding.quanuttuyen.com';
+ $scheme=(!empty($_SERVER['HTTPS'])&&$_SERVER['HTTPS']!=='off')?'https':'http';$path=str_replace('\\','/',dirname((string)($_SERVER['SCRIPT_NAME']??'/')));$path=in_array($path,['.','/',''],true)?'':rtrim($path,'/');
+ return $scheme.'://'.$host.$path;
+}
 function media_url($s): string {$s=(string)$s; return preg_match('~^(assets/|uploads/)[a-zA-Z0-9_./-]+$~D',$s)&&!str_contains($s,'..') || preg_match('~^https://[^\s]+$~D',$s)?$s:'';}
 function redirect($s): never {header('Location: '.$s, true,303);exit;}
 function icon($s): string {return '<i aria-hidden="true" class="fi fi-rr-'.e($s).'"></i>';}
