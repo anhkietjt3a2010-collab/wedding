@@ -28,6 +28,10 @@ body{font-size:17px;line-height:1.7}.section-title>p,.story-copy{font-size:20px}
 
 /* Mobile invitation layout: clear hero hierarchy, app-like bottom navigation, and safe floating actions. */
 .mobile-tabbar{display:none}
+.nav-actions{display:flex;align-items:center;gap:12px}
+.gift-top{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 17px;border:1px solid #eab5c8;border-radius:999px;background:#fff7fa;color:#9d2452;font:600 14px/1 var(--body);white-space:nowrap;box-shadow:0 5px 16px rgba(131,24,67,.10)}
+.gift-top:hover,.gift-top:focus-visible{background:#f8dce7;color:#831843;box-shadow:0 7px 20px rgba(131,24,67,.18)}
+.gift-top i{font-size:16px}
 @media(max-width:650px){
   body{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
   .hero{height:88svh;min-height:620px;max-height:820px;align-items:flex-end;padding-bottom:55px}
@@ -54,8 +58,15 @@ body{font-size:17px;line-height:1.7}.section-title>p,.story-copy{font-size:20px}
   .mobile-tabbar a{min-width:0;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:15px;color:#673741;font:500 10px/1.2 var(--body);text-align:center;touch-action:manipulation}
   .mobile-tabbar a i{font-size:19px;line-height:1.1;color:#a92556}
   .mobile-tabbar a[aria-current=location]{background:#fbe2eb;color:#8b2048;font-weight:600}
-  .gift-float{right:12px;bottom:calc(76px + env(safe-area-inset-bottom));min-height:44px;padding:9px 13px;font-size:14px}
-  .music{right:14px;bottom:calc(132px + env(safe-area-inset-bottom));width:46px;height:46px}
+  .nav{height:64px;padding:0 14px;gap:8px}
+  .brand{font-size:36px}
+  .nav .menu{order:3;margin-left:0;min-width:44px;min-height:44px}
+  .nav-actions{margin-left:auto;order:2;gap:0}
+  .nav-actions>.btn{display:none}
+  .gift-top{min-height:44px;padding:9px 13px;font-size:14px}
+  .gift-top i{font-size:17px}
+  .gift-float{display:none}
+  .music{right:14px;bottom:calc(76px + env(safe-area-inset-bottom));width:46px;height:46px}
 }
 .media-upload-controls{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px}.media-upload-button{min-height:40px;padding:8px 14px;font-size:14px}.media-upload-status{font-size:13px;line-height:1.45;color:#5b3540}.media-upload-status[aria-live]{display:block}
 .media-list-manager{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin:12px 0 20px}.media-list-item{min-width:0;display:grid;grid-template-columns:64px minmax(0,1fr) 38px 38px 54px;align-items:center;gap:7px;padding:8px;border:1px solid var(--color-border);border-radius:14px;background:#fff}.media-list-item img{width:64px;height:54px;border-radius:8px;object-fit:cover;background:#fce8ef}.media-list-item span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}.media-list-item button{min-width:36px;min-height:36px;padding:4px 8px}.media-list-item .media-list-remove,.media-library-item .media-delete-button{background:#fff;border:1px solid #dfa4b7;color:#821d3a;font-size:12px}.media-list-item button:disabled{opacity:.35}.media-library-upload{display:flex!important;align-items:end;flex-wrap:wrap;gap:12px!important;padding:16px;border:1px dashed #dfa4b7;border-radius:14px;background:#fff8fa}.media-library-upload label{min-width:min(100%,340px)}.media-library-upload input[type=file]{padding:8px}.media-library{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-top:20px}.media-library-item{min-width:0;padding:10px;border:1px solid var(--color-border);border-radius:16px;background:#fff}.media-library-item>img{height:150px;border-radius:10px;object-fit:cover}.media-library-item>input{margin:9px 0;font-size:12px}.media-library-item form{display:block!important;margin:0}.media-library-item .media-delete-button{min-height:38px;padding:7px 14px}
@@ -78,9 +89,10 @@ footer>p:not(.credits){max-width:760px;margin:12px auto 22px}
   .hero-content{width:100%;max-width:480px;padding:12px 15px 14px;background:transparent;border:0;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
   .hero h1{display:none}
   .hero h1,.hero h2,.hero .eyebrow,.hero .date,.hero .ornament{ text-shadow:0 1px 2px rgba(255,255,255,.96),0 0 12px rgba(255,247,250,.86)}
-  .gift-float{right:12px;bottom:calc(118px + env(safe-area-inset-bottom));left:auto;transform:none}
-  .gift-float:hover{transform:translateY(-2px)}
-  .music{right:12px;bottom:calc(172px + env(safe-area-inset-bottom));width:46px;height:46px}
+  .nav-actions{margin-left:auto}
+  .gift-top{min-width:44px;width:44px;padding:0}
+  .gift-top span{display:none}
+  .music{right:14px;bottom:calc(76px + env(safe-area-inset-bottom));width:46px;height:46px}
 }
 
 /* Sakura petals: softer rounded petals with a subtle central vein and varied drift. */
