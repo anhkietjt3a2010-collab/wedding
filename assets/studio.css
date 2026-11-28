@@ -91,3 +91,14 @@ main.admin{max-width:1600px;padding:24px 3% 60px 275px;margin:auto;min-height:10
 .couple-preview-link{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:7px 14px;color:#a32d59;font-size:13px;font-weight:600;text-decoration:none;border-radius:10px;transition:background .2s}
 .couple-preview-link:hover{background:#fbe3ed}.couple-preview-link:focus-visible{outline:2px solid #a32d59;outline-offset:3px}
 @media(prefers-reduced-motion:reduce){.couple-preview-link{transition:none}}
+
+/* Pink navigation / warm white workspace. Scoped to the admin document. */
+body.studio-admin{background:#fffcfd;color:#593b46}
+body.studio-admin main.admin{background:#fffcfd}
+.studio-admin .studio-side{background:#fbe7ef;border-right:1px solid #f0d5df;box-shadow:4px 0 20px rgba(99,32,58,.035)}
+.studio-admin .admin>header.toolbar{background:transparent;border-bottom-color:#eedee5}
+.studio-admin #overview article,.studio-admin #overview .studio-metrics article,.studio-admin #overview .studio-grid>article{background:#fff;border-color:#eedee5;box-shadow:0 5px 18px rgba(99,32,58,.04)}
+.studio-admin #overview .studio-grid>.studio-couple{background:radial-gradient(ellipse at top,#fff1f6,transparent 65%),#fff}
+.studio-admin .admin>section[id]:not(#overview){background:#fff;border:1px solid #eedee5}
+.studio-admin .studio-side a:hover:not([aria-current=page]){background:#f5d5e2;color:#853151}
+@media(max-width:900px){.studio-admin .studio-side{border:1px solid #f0d5df}}
