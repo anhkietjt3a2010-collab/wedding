@@ -147,3 +147,13 @@ footer>p:not(.credits){max-width:760px;margin:12px auto 22px}
 /* Match the reference portrait typography: warm antique gold calligraphy. */
 .hero h2{font-family:"Great Vibes",cursive;color:#a97819;text-shadow:0 1px 0 rgba(255,255,255,.78),0 2px 8px rgba(111,72,12,.12)}
 @media(max-width:650px){.hero h2{color:#a97819}}
+
+/* Clear event card reading hierarchy */
+#events .event h3{font-size:clamp(25px,2vw,29px);font-weight:600;line-height:1.12;letter-spacing:-.015em;color:#762338;margin:2px 0 8px}
+#events .event p{margin:4px 0;line-height:1.45}
+#events .event .event-datetime{font-size:16px;font-weight:600;color:#5a303a}
+#events .event .event-time{display:inline-block;margin-left:3px;padding:2px 8px;border-radius:999px;background:#fde8ef;color:#ad315b;font-size:14px;font-weight:600;white-space:nowrap}
+#events .event .event-venue{font-size:16px;font-weight:600;color:#492b32}
+#events .event .event-address{font-size:15px;font-weight:400;line-height:1.55;color:#765e63}
+#events .event .btn{margin-top:8px}
+@media(max-width:650px){#events .event h3{font-size:23px;line-height:1.2;margin-bottom:7px}#events .event .event-datetime,#events .event .event-venue{font-size:15px}#events .event .event-time{font-size:13px;padding:2px 7px}#events .event .event-address{font-size:14px;line-height:1.5}}
