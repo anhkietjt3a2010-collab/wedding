@@ -157,3 +157,18 @@ footer>p:not(.credits){max-width:760px;margin:12px auto 22px}
 #events .event .event-address{font-size:15px;font-weight:400;line-height:1.55;color:#765e63}
 #events .event .btn{margin-top:8px}
 @media(max-width:650px){#events .event h3{font-size:23px;line-height:1.2;margin-bottom:7px}#events .event .event-datetime,#events .event .event-venue{font-size:15px}#events .event .event-time{font-size:13px;padding:2px 7px}#events .event .event-address{font-size:14px;line-height:1.5}}
+
+/* Featured couple cards: more presence and a gentle pointer interaction. */
+#story .person{position:relative;isolation:isolate;overflow:hidden;min-height:228px;grid-template-columns:minmax(165px,39%) minmax(0,1fr);gap:22px;padding:16px;border-radius:30px;background:linear-gradient(135deg,#fffdfd 0%,#fff7f9 72%,#fff0f4 100%);border-color:#f4cbd8;box-shadow:0 14px 34px rgba(137,49,78,.11);transition:transform .32s ease,box-shadow .32s ease,border-color .32s ease}
+#story .person::before{content:'♡';position:absolute;z-index:-1;right:15px;top:-20px;color:#d59a3a;font:100px/1 var(--serif);opacity:.12;pointer-events:none;transition:transform .4s ease,opacity .4s ease}
+#story .person img{height:192px;min-height:192px;border-radius:21px;object-fit:cover;transition:transform .48s cubic-bezier(.2,.75,.25,1),filter .35s ease}
+#story .person>div{position:relative;padding:8px 16px 8px 0}
+#story .person .eyebrow{width:max-content;max-width:100%;padding:6px 11px;border:1px solid #f6d2de;border-radius:999px;background:#fff0f5;color:#a52e56;font-size:12px;font-weight:600;letter-spacing:1.3px}
+#story .person .eyebrow i{font-size:17px}
+#story .person h3{margin:9px 0 8px;color:#79263a;font-size:clamp(30px,3vw,36px);line-height:1.12;transition:color .3s ease}
+#story .person p{max-width:34ch;color:#593a40;font-size:17px;line-height:1.65}
+@media(hover:hover) and (pointer:fine){#story .person:hover{transform:translateY(-7px);border-color:#e9a6bd;box-shadow:0 24px 48px rgba(137,49,78,.18)}#story .person:hover::before{transform:rotate(14deg) scale(1.13);opacity:.22}#story .person:hover img{transform:scale(1.045);filter:saturate(1.06)}#story .person:hover h3{color:#a87520}}
+#story .person:focus-within{outline:3px solid #cc5d83;outline-offset:3px}
+@media(max-width:900px){#story .person{min-height:210px;grid-template-columns:minmax(145px,36%) minmax(0,1fr);gap:18px}#story .person img{height:178px;min-height:178px}}
+@media(max-width:650px){#story .person{min-height:0;grid-template-columns:minmax(112px,34%) minmax(0,1fr);gap:14px;padding:12px;border-radius:24px}#story .person img{height:150px;min-height:150px;border-radius:17px}#story .person>div{padding:4px 8px 4px 0}#story .person .eyebrow{padding:4px 9px;font-size:11px}#story .person h3{font-size:27px;margin:7px 0 5px}#story .person p{font-size:15px;line-height:1.5}}
+@media(prefers-reduced-motion:reduce){#story .person,#story .person::before,#story .person img,#story .person h3{transition:none!important}#story .person:hover{transform:none}}
