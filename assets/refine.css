@@ -26,6 +26,20 @@ body{font-size:17px;line-height:1.7}.section-title>p,.story-copy{font-size:20px}
 @media(max-width:900px){.nav nav{font-size:16px}.event{grid-template-columns:100px minmax(0,1fr)}}
 @media(max-width:650px){.nav nav{font:600 17px/1.5 var(--body)}.event{grid-template-columns:88px minmax(0,1fr)}.event-photo{height:132px}.event h3{font-size:22px}.event p{font-size:15px}.event .btn{font-size:15px}.person p{font-size:15px}.section-title>p,.story-copy{font-size:17px}}
 
+/* Restore clear, consistent icons across the invitation. */
+.count-label{gap:10px}
+.count-label>i{flex:0 0 auto;color:var(--pink);font-size:22px}
+.person .eyebrow{display:inline-flex;align-items:center;gap:7px}
+.person .eyebrow i{color:var(--pink);font-size:18px}
+.event h3{display:flex;align-items:center;gap:9px}
+.event-icon{flex:0 0 30px;width:30px;height:30px;display:inline-grid;place-items:center;border-radius:50%;background:#fbe6ed;color:var(--pink);font-size:17px}
+.event p{display:flex;align-items:flex-start;gap:8px}
+.event p>i{flex:0 0 17px;margin-top:3px;color:var(--pink);font-size:16px;text-align:center}
+.event p>span,.event p>strong{min-width:0}
+.event-photo-empty{grid-row:1/6}
+.event .btn i{font-size:16px}
+@media(max-width:650px){.count-label>i{font-size:19px}.event h3{gap:7px}.event-icon{flex-basis:27px;width:27px;height:27px;font-size:15px}.event p{gap:7px}.event p>i{flex-basis:16px;font-size:15px}}
+
 /* Mobile invitation layout: clear hero hierarchy, app-like bottom navigation, and safe floating actions. */
 .mobile-tabbar{display:none}
 .nav-actions{display:flex;align-items:center;gap:12px}

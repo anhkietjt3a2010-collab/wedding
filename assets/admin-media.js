@@ -45,29 +45,35 @@
     lines.forEach((path, index) => {
       const item = document.createElement('div');
       item.className = 'media-list-item';
+      item.draggable = true;
+      item.dataset.index = String(index);
       const image = document.createElement('img');
       image.alt = '';
       image.loading = 'lazy';
       image.src = /^(?:assets\/|uploads\/|https:\/\/)/.test(path) ? path : '';
       const name = document.createElement('span');
+      name.className = 'media-list-name';
       name.textContent = path;
       name.title = path;
+      const order = document.createElement('small');
+      order.className = 'media-list-order';
+      order.textContent = `Ảnh ${index + 1} / ${lines.length} · kéo để đổi vị trí`;
       const moveUp = document.createElement('button');
       moveUp.type = 'button';
       moveUp.className = 'media-list-action';
-      moveUp.textContent = '↑';
+      moveUp.textContent = '↑ Lên';
       moveUp.setAttribute('aria-label', `Chuyển ảnh ${index + 1} lên trước`);
       moveUp.disabled = index === 0;
       const moveDown = document.createElement('button');
       moveDown.type = 'button';
       moveDown.className = 'media-list-action';
-      moveDown.textContent = '↓';
+      moveDown.textContent = '↓ Xuống';
       moveDown.setAttribute('aria-label', `Chuyển ảnh ${index + 1} xuống sau`);
       moveDown.disabled = index === lines.length - 1;
       const remove = document.createElement('button');
       remove.type = 'button';
       remove.className = 'media-list-remove';
-      remove.textContent = 'Gỡ';
+      remove.textContent = 'Gỡ ảnh';
       remove.setAttribute('aria-label', `Gỡ ảnh ${index + 1} khỏi danh sách`);
       const changeOrder = destination => {
         const reordered = [...lines];
@@ -82,7 +88,33 @@
         target.value = lines.filter((_, i) => i !== index).join('\n');
         target.dispatchEvent(new Event('input', { bubbles: true }));
       });
-      item.append(image, name, moveUp, moveDown, remove);
+      const details = document.createElement('div');
+      details.className = 'media-list-details';
+      details.append(order, name);
+      const actions = document.createElement('div');
+      actions.className = 'media-list-actions';
+      actions.append(moveUp, moveDown, remove);
+      item.append(image, details, actions);
+      item.addEventListener('dragstart', event => {
+        item.classList.add('is-dragging');
+        event.dataTransfer?.setData('text/plain', String(index));
+        if (event.dataTransfer) event.dataTransfer.effectAllowed = 'move';
+      });
+      item.addEventListener('dragend', () => item.classList.remove('is-dragging'));
+      item.addEventListener('dragover', event => { event.preventDefault(); item.classList.add('drop-target'); });
+      item.addEventListener('dragleave', () => item.classList.remove('drop-target'));
+      item.addEventListener('drop', event => {
+        event.preventDefault();
+        item.classList.remove('drop-target');
+        const source = Number(event.dataTransfer?.getData('text/plain'));
+        if (!Number.isInteger(source) || source === index || source < 0 || source >= lines.length) return;
+        const reordered = [...lines];
+        const [moved] = reordered.splice(source, 1);
+        reordered.splice(index, 0, moved);
+        target.value = reordered.join('\n');
+        target.dispatchEvent(new Event('input', { bubbles: true }));
+        statusMessage(target, `Đã chuyển ảnh ${source + 1} tới vị trí ${index + 1}.`);
+      });
       manager.append(item);
     });
     manager.hidden = lines.length === 0;
@@ -116,6 +148,7 @@
     });
     controls.append(choose, picker, status);
     host.append(controls);
+    target.dataset.mediaStatus = 'true';
 
     if (target instanceof HTMLTextAreaElement) {
       const manager = document.createElement('div');
@@ -137,6 +170,29 @@
         area.addEventListener('drop', acceptDrop);
       });
     }
+  });
+
+  function statusMessage(target, message) {
+    const host = target.closest('label') || target.parentElement;
+    const status = host?.querySelector('.media-upload-status');
+    if (status) status.textContent = message;
+  }
+
+  const sectionIcons = new Map([
+    ['Chỉnh sửa nội dung website', 'edit'], ['Thông tin mừng cưới và QR', 'gift'],
+    ['Media & nhạc nền', 'picture'], ['Thư viện ảnh đã tải', 'folder-open'],
+    ['Tạo thiệp mời riêng', 'envelope'], ['Khách mời & lời chúc', 'users'],
+    ['Khách xác nhận tham dự', 'calendar-check'], ['Duyệt lời chúc', 'comment-heart'],
+    ['Đổi mật khẩu', 'lock'], ['Tình trạng xác nhận tham dự', 'chart-pie'],
+    ['Khách phản hồi gần đây', 'users'], ['Thao tác nhanh', 'bolt']
+  ]);
+  document.querySelectorAll('main.admin h2').forEach(heading => {
+    const iconName = sectionIcons.get(heading.textContent.trim());
+    if (!iconName || heading.querySelector('i')) return;
+    const icon = document.createElement('i');
+    icon.className = `fi fi-rr-${iconName}`;
+    icon.setAttribute('aria-hidden', 'true');
+    heading.prepend(icon);
   });
 
   document.addEventListener('paste', event => {
