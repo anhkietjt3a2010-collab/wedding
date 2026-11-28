@@ -102,3 +102,30 @@ body.studio-admin main.admin{background:#fffcfd}
 .studio-admin .admin>section[id]:not(#overview){background:#fff;border:1px solid #eedee5}
 .studio-admin .studio-side a:hover:not([aria-current=page]){background:#f5d5e2;color:#853151}
 @media(max-width:900px){.studio-admin .studio-side{border:1px solid #f0d5df}}
+
+/* Reference direction: a clear editorial workspace with pink accents. */
+.studio-admin{--studio-border:#f0d8e2;--studio-muted:#795b67}
+.studio-admin main.admin{max-width:1700px;padding-top:20px}
+.studio-admin .admin>header.toolbar h1{font-family:var(--body);font-size:28px;letter-spacing:-.6px}
+.studio-admin .studio-side strong{font-family:var(--script);font-size:40px;line-height:1.2;font-weight:400}
+.studio-admin .studio-side small{font-size:10px;letter-spacing:.24em;margin-top:10px;margin-bottom:30px}
+.studio-admin .studio-side a{min-height:48px;border-radius:12px}
+.studio-admin .admin>section#content{padding:0;border:0;box-shadow:none;background:transparent}
+.studio-admin #content>h2{margin-bottom:20px}
+.studio-editor-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+.studio-editor-card{min-width:0;padding:22px;border:1px solid var(--studio-border);border-radius:20px;background:linear-gradient(150deg,#fff 65%,#fff8fb);box-shadow:0 6px 20px #9a31580a}
+.studio-editor-info{grid-column:1;grid-row:1}.studio-editor-events{grid-column:2;grid-row:1}.studio-editor-gifts{grid-column:1}.studio-editor-media{grid-column:2}
+.studio-editor-card h3{display:flex;align-items:center;gap:10px;margin:0 0 22px;font:italic 25px/1.3 Georgia,serif;color:#955c28}
+.studio-editor-card h3>i{font-size:23px;color:#c44173}
+.studio-admin .admin label{font-family:var(--body);font-size:13px;font-weight:600;color:#593b46}
+.studio-admin .admin input,.studio-admin .admin textarea,.studio-admin .admin select{font-family:var(--body);font-size:14px;font-weight:400;line-height:1.6;color:#49343c;background:#fff;border:1px solid #e9cfda;border-radius:10px;padding:10px 12px;min-height:44px;box-shadow:0 2px 6px #a9375b05}
+.studio-admin .admin textarea{min-height:108px;resize:vertical}
+.studio-editor-card .admin-grid{gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.studio-admin .studio-editor-card fieldset.panel{padding:14px;margin:16px 0;background:#fffafb;border:1px solid #efd8e2;border-radius:14px;box-shadow:none}
+.studio-editor-card fieldset legend{font-size:13px}
+.studio-admin .hint{font-family:var(--body);font-size:12px;line-height:1.7;color:var(--studio-muted)}
+.studio-save-bar{position:sticky;bottom:12px;z-index:12;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:22px;padding:12px 18px;background:#fffafbf5;border:1px solid #edcedc;border-radius:16px;box-shadow:0 8px 28px #8a2c5020}
+.studio-save-bar>span{font-size:13px;color:var(--studio-muted)}
+.studio-save-bar>button{min-height:44px;padding:10px 28px}
+@media(max-width:1100px){.studio-editor-grid{grid-template-columns:1fr}.studio-editor-info,.studio-editor-events,.studio-editor-gifts,.studio-editor-media{grid-column:auto;grid-row:auto}}
+@media(max-width:620px){.studio-editor-card{padding:16px;border-radius:16px}.studio-editor-card .admin-grid{grid-template-columns:1fr}.studio-save-bar{bottom:8px;padding:10px}.studio-save-bar>span{display:none}.studio-save-bar>button{width:100%}.studio-admin .admin input,.studio-admin .admin textarea,.studio-admin .admin select{font-size:16px}}
